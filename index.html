@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Квадратный Калькулятор</title>
+
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                font-family: sans-serif;
+            }
+
+            body{
+                background: linear-gradient(to top right, rgba(255, 166, 0, 0.816) 0%, 
+                rgba(255, 0, 0, 0.81) 100%);
+                background-attachment: fixed;
+            }
+
+            .main{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .Welcome{
+                font-size: 150%;
+                margin-top: 30px;
+                text-align: center;
+            }
+
+            .inputs{
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                align-items: center;
+                margin: 20px 0;
+            }
+
+            .inputs input{
+                outline: none;
+                width: 70px;
+                height: 30px;
+                font-size: 25px;
+                text-align: center;
+                border: 3px solid black;
+                border-radius: 5px;
+                overflow: scroll;
+            }
+
+            .inputs input:hover{
+                cursor: pointer;
+                opacity: 0.7;
+            }
+
+            .btn button{
+                padding: 5px;
+                font-size: 20px;
+                border: 3px solid black;
+                border-radius: 5px;
+                margin-left: 10px;
+            }
+
+            .btn button:hover{
+                background-color: orange;
+                color: black;
+                border: none;
+                cursor: pointer;
+                border: 3px solid orange;
+            }
+
+            .result p{
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 5px;
+                font-size: 120%;
+            }
+            
+            .footer{
+                position: absolute;
+                bottom: 3px;
+                left: 3px;
+                font-size: 15px;
+            }
+        </style>
+</head>
+<body>
+    <main class="main">
+        <div class="WelcomeDiv">
+            <p class="Welcome">Калькулятор для решения квадратных уравнений</p>
+        </div>
+
+        <div class="inputs">
+            <input type="number" placeholder="a = ..." id="A" value="-1">
+            <input type="number" placeholder="b = ..." id="B" value="-1">
+            <input type="number" placeholder="c = ..." id="C" value="-1">
+        </div>
+
+        <div class="btn">
+            <button onclick="SqrEqua()">Посчитать</button>
+            <button onclick="location.reload()">Очистить</button>
+        </div>
+
+        <div class="result">
+            <p id="disk"></p>
+            <p id="diskSqr"></p>
+            <p id="N+sqr"></p>
+            <p id="Result"></p>
+            <p id="Result2"></p>
+        </div>
+    </main>
+
+    <p class="footer">Автор - Богдан К.</p>
+    
+    <script defer>
+        //a*x*x + b*x + c = 0
+        //"(" + -b + "+" + Math.sqrt(d) +")" + "/" + "(" + "2" + "*" + a + ")" + " = " + 
+        try {
+        let a
+        let b
+        let c
+        let d 
+        let x
+        let x1
+        let DSqr = document.getElementById("diskSqr")
+        let D = document.getElementById("disk")
+        let N_Sqr = document.getElementById("N+sqr")
+        let string = document.getElementById("Result")
+        let string2 = document.getElementById("Result2")
+
+        function ClearAll(){
+            DSqr.innerHTML = "";
+            D.innerHTML = "";
+            N_Sqr.innerHTML = "";
+            string.innerHTML = "";
+            string2.innerHTML = "";
+        }
+            
+            function SqrEqua (){
+                a = document.getElementById("A").value
+                b = document.getElementById("B").value
+                c = document.getElementById("C").value
+
+                if(a == 0 && a == ""){
+                    DSqr.innerHTML = "Введите корректное число!"
+                    return
+                } if(b == ""){
+                    DSqr.innerHTML = "Введите корректное число!"
+                    return
+                } if(c == ""){
+                    DSqr.innerHTML = "Введите корректное число!"
+                    return
+                }
+
+                
+
+                d = eval(b*b-4*a*c) 
+
+                D.innerHTML = d + '  -- дискриминант'
+                console.log(d + ' -- дискриминант')
+
+                if(d < 0){
+                    ClearAll();
+                    D.innerHTML = d + '  -- дискриминант'
+                    DSqr.innerHTML = Math.sqrt(d).toFixed(2) + '  -- корень из дискриминанта'
+                    console.log("      нет корней")  
+                    string.innerHTML = 'Нет корней';
+                    return
+                }
+
+                DSqr.innerHTML = Math.sqrt(d).toFixed(2) + '  -- корень из дискриминанта'
+                console.log(Math.sqrt(d) + ' -- корень из дискриминанта')
+    
+                if(d == 0){
+                    ClearAll();
+                    D.innerHTML = d + '  -- дискриминант'
+                    DSqr.innerHTML = Math.sqrt(d).toFixed(2) + '  -- корень из дискриминанта'
+                    console.log("      1 корень")
+                    N_Sqr.innerHTML = "1 корень"
+                    x = eval((-b) / (2*a)).toFixed(2)
+                    console.log(x + ' -- x1')
+                    string.innerHTML = x + ' - x1';
+                    return
+                }
+    
+                if(d > 0){
+                    ClearAll();
+                    D.innerHTML = d + '  -- дискриминант'
+                    DSqr.innerHTML = Math.sqrt(d).toFixed(2) + ' -- корень из дискриминанта'
+                    console.log("      2 корня")
+                    N_Sqr.innerHTML = "2 корня"
+                    x = eval((-b - Math.sqrt(d)) / (2 * a)).toFixed(2)
+                    x1 = eval((-b + Math.sqrt(d))/(2 * a)).toFixed(2)
+                    if(x <= x1){
+                        console.log(x + ' -- x1')
+                        string.innerHTML = x + ' -- x1'
+                        string2.innerHTML = x1 + ' -- x2'
+                        console.log(x1 + ' -- x2')
+                        return
+                    } else{
+                        console.log(x1 + ' -- x1')
+                        console.log(x + ' -- x2')
+                        string.innerHTML ="Результат -- " + x1 + ' -- x1'
+                        string2.innerHTML ="Результат -- " + x + ' -- x2'
+                        return
+                    }
+                } 
+            }  
+            } catch (error) {
+                console.log("error")
+                console.log(error.stack)
+            }
+            
+        </script>
+</body>
+</html>
