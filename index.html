@@ -9,78 +9,101 @@
         * {
             margin: 0;
             padding: 0;
-            font-family: sans-serif;
+            box-sizing: border-box;
         }
 
         body {
             background: linear-gradient(to top right, #ffa600 0%, #ff0000 100%) fixed;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+            color: #fff;
+            padding: 20px;
         }
 
         .main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
         }
 
         .Heading {
-            color: #fff;
-            font-size: 150%;
-            margin-top: 30px;
-            text-align: center;
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+            line-height: 1.4;
         }
 
         .inputs {
-            width: 100%;
             display: flex;
-            justify-content: space-evenly;
+            justify-content: center;
+            gap: 15px;
             margin: 20px 0;
         }
 
         .inputs input {
-            outline: none;
             width: 70px;
-            height: 30px;
-            font-size: 25px;
+            height: 40px;
+            font-size: 1.2rem;
             text-align: center;
-            border: 3px solid black;
-            border-radius: 5px;
-            overflow: scroll;
+            border: 3px solid #000;
+            border-radius: 8px;
+            background: #fff;
+            color: #000;
+            transition: all 0.2s ease;
         }
 
+        .inputs input:focus,
         .inputs input:hover {
-            cursor: pointer;
-            opacity: 0.7;
+            outline: none;
+            transform: scale(1.05);
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+        }
+
+        .btn {
+            margin: 20px 0;
         }
 
         .btn button {
-            padding: 5px;
-            font-size: 20px;
-            border: 3px solid black;
-            border-radius: 5px;
-            margin-left: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: 3px solid #000;
+            border-radius: 8px;
+            background: #fff;
+            color: #000;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
-        .btn button:hover{
+        .btn button:hover {
             background-color: orange;
-            color: black;
-            cursor: pointer;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: left;
         }
 
         .result p {
-            margin: 10px 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5px;
-            font-size: 120%;
-        }
-
-        .footer {
-            position: absolute;
-            bottom: 3px;
-            left: 3px;
-            font-size: 15px;
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            word-break: break-word;
         }
     </style>
 
@@ -109,8 +132,6 @@
         <p id="string2"></p>
     </div>
 </main>
-
-<p class="footer">Форк Михайлова Т. проекта Костина Б.</p>
 
 <script defer>
     let a, b, c, discriminant, x1, x2;
@@ -151,20 +172,20 @@
 
         discriminant = b ** 2 - 4 * a * c;
 
-        htmlDiscriminant.innerHTML = discriminant + '  — дискриминант';
+        htmlDiscriminant.innerHTML = `D = ${discriminant} — дискриминант`;
 
         if (discriminant < 0) {
-            htmlString1.innerHTML = 'Если дискриминант меньше 0, то корней нет';
+            htmlString1.innerHTML = 'Дискриминант меньше 0 — корней нет';
         } else if (discriminant === 0) {
             x1 = -b / (2 * a);
-            htmlString1.innerHTML = x1 + ' — ответ';
+            htmlString1.innerHTML = `x = ${x1.toFixed(3)} — единственный корень`;
         } else {
-            const sqrtDiscriminant = Math.sqrt(discriminant);
-            htmlDiscriminantSqr.innerHTML = sqrtDiscriminant.toFixed(2) + '  — корень из дискриминанта';
-            x1 = (-b - sqrtDiscriminant) / (2 * a);
-            x2 = (-b + sqrtDiscriminant) / (2 * a);
-            htmlString1.innerHTML = x1 + ' — x₁';
-            htmlString2.innerHTML = x2 + ' — x₂';
+            const sqrtD = Math.sqrt(discriminant).toFixed(2);
+            htmlDiscriminantSqr.innerHTML = `√D = ${sqrtD}  — корень из дискриминанта`;
+            x1 = (-b - Math.sqrt(discriminant)) / (2 * a);
+            x2 = (-b + Math.sqrt(discriminant)) / (2 * a);
+            htmlString1.innerHTML = `x₁ = ${x1.toFixed(3)}`;
+            htmlString2.innerHTML = `x₂ = ${x2.toFixed(3)}`;
         }
     }
 </script>
